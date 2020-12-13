@@ -39,6 +39,12 @@ android {
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
+                //正式环境不需要debug代码
+                java {
+                    if (isRelease) {
+                        exclude( '**/debug/**')
+                    }
+                }
             }
         }
     }
