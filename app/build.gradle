@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+
+def androidId = rootProject.ext.androidID
+android {
+    compileSdkVersion androidId.compileSdkVersion
+    buildToolsVersion androidId.buildToolsVersion
+    defaultConfig {
+        applicationId applicationID.applicationId
+        minSdkVersion androidId.minSdkVersion
+        targetSdkVersion androidId.targetSdkVersion
+        versionCode androidId.versionCode
+        versionName androidId.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //给java代码暴露环境变量
+        buildConfigField("boolean","isRelease", String.valueOf(isRelease))
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "url", "\"${url.debug}\"")
+        }
+
+        release {
+            buildConfigField("String", "url", "\"${url.release}\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //此处遍历依赖
+    dependencesID.each { k, v ->
+        //也可以通过遍历k来依赖不同的
+        implementation v
+    }
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    if (isRelease) {
+        implementation project(":login")
+        implementation project(":register")
+    } else {
+        // 每个模块独立运行
+    }
+}
