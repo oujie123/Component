@@ -5,3 +5,7 @@
 * 使用隐式意图的方式，缺点：在AndroidManifes.xml里面配置xml写的太多了
 * 使用类加载的方式，可取，但是缺点，容易写错类名，但是可以克服
 * 使用全局Map的方式，缺点：要注册很多对象
+
+
+
+![image-20201215000023490](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201215000023490.png)

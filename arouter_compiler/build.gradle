@@ -1,0 +1,22 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // 增加背后的服务监测编译器的类   auto-service
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+
+    //依赖注解
+    implementation project(':arouter_annotations')
+
+    // 用javapoet的方式实现
+    implementation 'com.squareup:javapoet:1.9.0'
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+tasks.withType(JavaCompile){
+    options.encoding = "utf-8"
+}

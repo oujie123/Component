@@ -15,6 +15,13 @@ android {
 
         //给java代码暴露环境变量
         buildConfigField("boolean","isRelease", String.valueOf(isRelease))
+
+        // 给java工程传递参数,可以动态传递报名，模块名到注解处理器中
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [jack:"hello world!"]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -37,6 +44,12 @@ dependencies {
         //也可以通过遍历k来依赖不同的
         implementation v
     }
+
+    // 引入注解
+    implementation project(':arouter_annotations')
+
+    // 使用这句话注解处理器才能工作
+    annotationProcessor project(':arouter_compiler')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

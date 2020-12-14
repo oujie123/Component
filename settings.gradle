@@ -1,1 +1,1 @@
-include ':app', ':mylibrary', ':login', ':register'
+include ':app', ':mylibrary', ':login', ':register', ':arouter_annotations', ':arouter_compiler'

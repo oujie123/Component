@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.arouter_annotations.ARouter;
+
+@ARouter(path = "MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override
