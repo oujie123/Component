@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.example.arouter_annotations.ARouter;
 
-@ARouter(path = "MainActivity")
+@ARouter(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -8,4 +8,8 @@
 
 
 
-![image-20201215000023490](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201215000023490.png)
+![1](E:\programe\AndroidProjectGithub\Component\doc\1.jpg)
+
+
+
+![2](E:\programe\AndroidProjectGithub\Component\doc\2.jpg)

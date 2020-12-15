@@ -54,6 +54,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation dependencesID.appcompat
+
+    // 引入注解
+    implementation project(':arouter_annotations')
+
+    // 使用这句话注解处理器才能工作
+    annotationProcessor project(':arouter_compiler')
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

@@ -6,6 +6,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.arouter_annotations.ARouter;
+
+@ARouter(path = "/register/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override

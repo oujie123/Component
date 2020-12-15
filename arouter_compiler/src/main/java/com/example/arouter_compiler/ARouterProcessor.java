@@ -2,6 +2,7 @@ package com.example.arouter_compiler;
 
 import com.example.arouter_annotations.ARouter;
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -62,47 +63,93 @@ public class ARouterProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         messager.printMessage(Diagnostic.Kind.NOTE, "---------> running");
-        if (set.isEmpty()){
+        if (set.isEmpty()) {
             return false; // 如果返回false说明我的注解处理器不干活儿了，  返回true说明干完了
         }
         /**
-             模块一
-             package com.example.helloworld;
+         模块一
+         package com.example.helloworld;
 
-             public final class HelloWorld {
+         public final class HelloWorld {
 
-                public static void main(String[] args) {
-                    System.out.println("Hello, JavaPoet!");
-                }
-             }
+         public static void main(String[] args) {
+         System.out.println("Hello, JavaPoet!");
+         }
+         }
          */
         // 获取被ARouter注解的“类节点信息”
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(ARouter.class);
         for (Element element : elements) {
-            //多个MainActivity注册
+            //多个MainActivity注册     element就代表每一个Activity
             // 1.写方法 生成main方法   返回值也是对象
-            MethodSpec mainMethod = MethodSpec.methodBuilder("main")
-                    .addModifiers(Modifier.PUBLIC,Modifier.STATIC)
-                    .returns(void.class)
-                    .addParameter(System[].class,"args")
-                    .addStatement("$T.out.println($S)",System.class,"Hello, JavaPoet!") // 增加方法内部的内容.   $T代表替换的类  $S代表字符串
+            /**
+             MethodSpec mainMethod = MethodSpec.methodBuilder("main")
+             .addModifiers(Modifier.PUBLIC,Modifier.STATIC)
+             .returns(void.class)
+             .addParameter(String[].class,"args")
+             .addStatement("$T.out.println($S)",System.class,"Hello, JavaPoet!") // 增加方法内部的内容.   $T代表替换的类  $S代表字符串
+             .build();
+
+             // 2.写类
+             TypeSpec jackClass = TypeSpec.classBuilder("HelloWorld")
+             .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
+             .addMethod(mainMethod)
+             .build();
+
+             // 3.写包
+             JavaFile file = JavaFile.builder("com.gacrnd.gcs.component",jackClass).build();
+
+             // 生成文件
+             try {
+             file.writeTo(filer);
+             } catch (IOException e) {
+             e.printStackTrace();
+             messager.printMessage(Diagnostic.Kind.NOTE, "生成失败");
+             }**/
+
+            /**
+             模板：
+             public class MainActivity3$$$$$$$$$ARouter {
+             public static Class findTargetClass(String path) {
+             return path.equals("/app/MainActivity3") ? MainActivity3.class : null;
+             }
+             }
+             */
+
+            // 拿到包名
+            String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();
+
+            //拿到类名
+            String className = element.getSimpleName().toString();
+            messager.printMessage(Diagnostic.Kind.NOTE, "被@ARoute注解的类有：" + className);
+            String finalClassName = className + "$$$$$$$$$ARouter";
+
+            //拿到ARouter注解
+            ARouter aRouter = element.getAnnotation(ARouter.class);
+
+            // 1.写方法
+            MethodSpec findTargetMethod = MethodSpec.methodBuilder("findTargetClass")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(Class.class)
+                    .addParameter(String.class, "path")
+                    // element就是MainActivity，但是需要转型，需要使用javapoet包装一下,强转成TypeElement
+                    .addStatement("return path.equals($S) ? $T.class : null", aRouter.path(), ClassName.get((TypeElement) element))
                     .build();
 
             // 2.写类
-            TypeSpec jackClass = TypeSpec.classBuilder("HelloWorld")
-                    .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
-                    .addMethod(mainMethod)
+            TypeSpec myClass = TypeSpec.classBuilder(finalClassName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addMethod(findTargetMethod)
                     .build();
 
-            // 3.写包
-            JavaFile file = JavaFile.builder("com.gacrnd.gcs.component",jackClass).build();
+            // 3.写包名
+            JavaFile packagef = JavaFile.builder(packageName,myClass).build();
 
-            // 生成文件
+            // 4.写文件
             try {
-                file.writeTo(filer);
+                packagef.writeTo(filer);
             } catch (IOException e) {
                 e.printStackTrace();
-                messager.printMessage(Diagnostic.Kind.NOTE, "生成失败");
             }
         }
         return true;
