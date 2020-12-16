@@ -14,12 +14,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         //给java代码暴露环境变量
-        buildConfigField("boolean","isRelease", String.valueOf(isRelease))
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
 
         // 给java工程传递参数,可以动态传递报名，模块名到注解处理器中
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName(),packageNameForAPT:packageNameForAPT]
+                arguments = [moduleName: project.getName(), packageNameForAPT: packageNameForAPT]
             }
         }
     }

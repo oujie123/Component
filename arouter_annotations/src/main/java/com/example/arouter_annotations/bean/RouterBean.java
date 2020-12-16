@@ -61,6 +61,8 @@ public class RouterBean {
         // 路由组
         private String group;
 
+        public Builder(){}
+
         public Builder addType(TypeEnum type) {
             this.type = type;
             return this;
@@ -133,5 +135,16 @@ public class RouterBean {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "RouterBean{" +
+                "typeEnum=" + typeEnum +
+                ", element=" + element +
+                ", myClass=" + myClass +
+                ", path='" + path + '\'' +
+                ", group='" + group + '\'' +
+                '}';
     }
 }
