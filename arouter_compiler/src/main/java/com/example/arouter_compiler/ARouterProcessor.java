@@ -1,6 +1,7 @@
 package com.example.arouter_compiler;
 
 import com.example.arouter_annotations.ARouter;
+import com.example.arouter_compiler.utils.ProcessorConfig;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -28,9 +29,9 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class) //一个服务，其他地方可以调用
-@SupportedAnnotationTypes({"com.example.arouter_annotations.ARouter"})  // 支持那些注解
+@SupportedAnnotationTypes({ProcessorConfig.AROUTER_PACKAGE})  // 支持那些注解
 @SupportedSourceVersion(SourceVersion.RELEASE_7)  // 环境的版本
-@SupportedOptions("jack")  // 接受Android工程传递过来的参数
+@SupportedOptions({ProcessorConfig.OPTIONS, ProcessorConfig.APT_PACKAGE})  // 接受Android工程传递过来的参数
 public class ARouterProcessor extends AbstractProcessor {
 
     // 操作Element的工具类（类，函数，属性，其实就是Element）
@@ -46,6 +47,9 @@ public class ARouterProcessor extends AbstractProcessor {
     // 文件生成器，类，资源等。  就是最终要生成的文件是需要Filer来完成的
     private Filer filer;
 
+    private String options;
+    private String aptPackage;
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
@@ -54,16 +58,24 @@ public class ARouterProcessor extends AbstractProcessor {
         messager = processingEnvironment.getMessager();
         filer = processingEnvironment.getFiler();
 
-        String value = processingEnvironment.getOptions().get("jack");
+        options = processingEnvironment.getOptions().get(ProcessorConfig.OPTIONS);
+        aptPackage = processingEnvironment.getOptions().get(ProcessorConfig.APT_PACKAGE);
         // 如果想要注解处理器中抛出异常，可以使用Diagnostic.Kind.ERROR，但是这里只是打印调试信息
         // 只能用Diagnostic.Kind.NOTE
-        messager.printMessage(Diagnostic.Kind.NOTE, "--------->" + value);
+        messager.printMessage(Diagnostic.Kind.NOTE, "--------->" + options);
+        messager.printMessage(Diagnostic.Kind.NOTE, "--------->" + aptPackage);
+        if (options != null && aptPackage != null) {
+            messager.printMessage(Diagnostic.Kind.NOTE, "APT 环境搭建完成....");
+        } else {
+            messager.printMessage(Diagnostic.Kind.NOTE, "APT 环境有问题，请检查 options 与 aptPackage 为null...");
+        }
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        messager.printMessage(Diagnostic.Kind.NOTE, "---------> running");
+        //messager.printMessage(Diagnostic.Kind.NOTE, "---------> running");   //有一个注解就会运行一次process
         if (set.isEmpty()) {
+            messager.printMessage(Diagnostic.Kind.NOTE, "没有找到被@ARouter注解的地方呀");
             return false; // 如果返回false说明我的注解处理器不干活儿了，  返回true说明干完了
         }
         /**

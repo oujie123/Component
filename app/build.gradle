@@ -19,7 +19,7 @@ android {
         // 给java工程传递参数,可以动态传递报名，模块名到注解处理器中
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [jack:"hello world!"]
+                arguments = [moduleName: project.getName(),packageNameForAPT:packageNameForAPT]
             }
         }
     }

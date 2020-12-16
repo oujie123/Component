@@ -2,6 +2,7 @@ ext {
 
     // 配置环境
     isRelease = true
+    packageNameForAPT = "com.gacrnd.gcs.component"
 
     url = [
             "debug"  : "https://www.gac.icv.com/debug",

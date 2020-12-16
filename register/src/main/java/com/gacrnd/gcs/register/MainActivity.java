@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reegister);
+        setContentView(R.layout.activity_register);
         Intent intent = getIntent();
         Toast.makeText(this,"-->" + intent.getStringExtra("name"),Toast.LENGTH_LONG).show();
     }
