@@ -46,6 +46,9 @@ dependencies {
     // 引入注解
     implementation project(':arouter_annotations')
 
+    // 引入api
+    implementation project(':arouter_api')
+
     // 使用这句话注解处理器才能工作
     annotationProcessor project(':arouter_compiler')
 

@@ -232,6 +232,9 @@ public class ARouterProcessor extends AbstractProcessor {
             TypeElement pathType = elementTool.getTypeElement(ProcessorConfig.AROUTER_API_PATH);
             TypeElement groupType = elementTool.getTypeElement(ProcessorConfig.AROUTER_API_GROUP);
 
+            // what the fuck, 少导入依赖，害得我调了一晚上，MD
+//            messager.printMessage(Diagnostic.Kind.NOTE,  pathType +"---------> running");
+
             // TODO 正式开始生成文件：生成path文件
             try {
                 createPathFile(pathType);
@@ -307,7 +310,6 @@ public class ARouterProcessor extends AbstractProcessor {
                     .addMethod(builder.build())
                     .build();
 
-            messager.printMessage(Diagnostic.Kind.NOTE,  "---------> running");
             // 一气呵成生成文件
             JavaFile file = JavaFile.builder(aptPackage, finalClass).build();
 
