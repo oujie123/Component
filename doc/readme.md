@@ -13,3 +13,42 @@
 
 
 ![2](E:\programe\AndroidProjectGithub\Component\doc\2.jpg)
+
+
+
+
+
+JavaPoet API：
+
+https://github.com/square/javapoet
+
+
+
+需要生成的group类
+
+```java
+public class ARouter$$GROUP$$register implements ARouterGroup {
+  @Override
+  public Map<String, Class<? extends ARouterPath>> getGroupMap() {
+    Map<String, Class<? extends ARouterPath>> groupMap = new HashMap<>();
+    groupMap.put("register", ARouter$$Path$$register.class);
+    return groupMap;
+  }
+}
+```
+
+
+
+需要生成的path类
+
+```java
+public class ARouter$$Path$$register implements ARouterPath {
+  @Override
+  public Map<String, RouterBean> getPathMap() {
+    Map<String, RouterBean> pathName = new HashMap<>();
+    pathName.put("/register/MainActivity",RouterBean.create(RouterBean.TypeEnum.ACTIVITY, MainActivity.class, "/register/MainActivity", "register"));
+    return pathName;
+  }
+}
+```
+

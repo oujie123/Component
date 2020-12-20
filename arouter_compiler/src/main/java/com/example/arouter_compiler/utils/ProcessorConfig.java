@@ -25,6 +25,8 @@ public class ProcessorConfig {
 
     // 方法中放pathName变量
     public static final String PATH_VAR1 = "pathName";
+    // 方法中放groupName变量
+    public static final String GROUP_VAR1 = "groupMap";
 
     //Path类前缀
     public static final String PATH_FILE_NAME = "ARouter$$Path$$";
