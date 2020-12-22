@@ -5,9 +5,12 @@ import com.example.arouter_compiler.utils.ProcessorConfig;
 import com.example.arouter_compiler.utils.ProcessorUtils;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +27,11 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import javax.tools.Diagnostic;
 
 /**
  * @author Jack_Ou  created on 2020/12/22.
@@ -113,8 +118,25 @@ public class ParameterProcessor extends AbstractProcessor {
                             .build();
 
                     factory.addFirstStatement();
+                    for (Element element : entry.getValue()) {
+                        factory.buildStatement(element);
+                    }
 
+                    String finalClassName = typeElement.getSimpleName() + ProcessorConfig.PARAMETER_FILE_NAME;
 
+                    messager.printMessage(Diagnostic.Kind.NOTE, "APT生成获取参数类文件名：" + className.packageName() + "." + finalClassName);
+
+                    try {
+                        JavaFile.builder(className.packageName(), TypeSpec.classBuilder(finalClassName)
+                                .addModifiers(Modifier.PUBLIC)
+                                .addSuperinterface(ClassName.get(parameterType))
+                                .addMethod(factory.build())
+                                .build())
+                                .build()
+                                .writeTo(filer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

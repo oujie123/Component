@@ -35,10 +35,13 @@ public class ParameterFactory {
     // Messager用来报告错误，警告和其他提示信息
     private Messager messager;
 
+    private ParameterSpec parameterSpec;
+
     // 不想用户使用此构造函数，必须使用Builder设计模式
     private ParameterFactory(Builder builder) {
         this.messager = builder.messager;
         this.className = builder.className;
+        this.parameterSpec = builder.parameterSpec;
 
         // 生成此方法
         // 通过方法参数体构建方法体：public void getParameter(Object target) {
@@ -48,19 +51,23 @@ public class ParameterFactory {
                 .addParameter(builder.parameterSpec);
     }
 
-    /** 只有一行
+    /**
+     * 只有一行
      * Personal_MainActivity t = (Personal_MainActivity) targetParameter;
      */
     public void addFirstStatement() {
-        method.addStatement("$T t = ($T) " + ProcessorConfig.PARAMETER_NAME, className, className);
+        // 强转直接用()即可
+        method.addStatement("$T t = ($T)" + ProcessorConfig.PARAMETER_NAME, className, className);
     }
 
     public MethodSpec build() {
         return method.build();
     }
 
-    /** 多行 循环 复杂
+    /**
+     * 多行 循环 复杂
      * 构建方体内容，如：t.s = t.getIntent.getStringExtra("s");
+     *
      * @param element 被注解的属性元素
      */
     public void buildStatement(Element element) {
@@ -94,7 +101,7 @@ public class ParameterFactory {
         } else if (type == TypeKind.BOOLEAN.ordinal()) {
             // t.s = t.getIntent().getBooleanExtra("isSuccess", t.age);
             methodContent += "getBooleanExtra($S, " + finalValue + ")";  // 有默认值
-        } else  { // String 类型，没有序列号的提供 需要我们自己完成
+        } else { // String 类型，没有序列号的提供 需要我们自己完成
             // t.s = t.getIntent.getStringExtra("s");
             // typeMirror.toString() java.lang.String
             if (typeMirror.toString().equalsIgnoreCase(ProcessorConfig.STRING)) {

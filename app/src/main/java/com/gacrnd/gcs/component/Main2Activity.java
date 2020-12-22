@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.arouter_annotations.ARouter;
+import com.example.arouter_annotations.Parameter;
 
 @ARouter(path = "/app/Main2Activity",group = "app")
 public class Main2Activity extends AppCompatActivity {
+
+    @Parameter
+    int age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

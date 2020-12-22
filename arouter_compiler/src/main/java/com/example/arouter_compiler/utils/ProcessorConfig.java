@@ -36,7 +36,10 @@ public class ProcessorConfig {
     public static final String PATH_FILE_NAME = "ARouter$$Path$$";
 
     //Group类前缀
-    public static final String GROUP_FILE_NAME = "ARouter$$GROUP$$";
+    public static final String GROUP_FILE_NAME = "ARouter$$Group$$";
+
+    //参数类后缀
+    public static final String PARAMETER_FILE_NAME = "$$Parameter";
 
     //获取groupMap
     public static final String GROUP_METHOD_NAME = "getGroupMap";
