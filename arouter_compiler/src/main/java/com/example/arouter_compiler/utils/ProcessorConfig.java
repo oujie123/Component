@@ -7,6 +7,7 @@ public class ProcessorConfig {
 
     // @ARouter注解 的 包名 + 类名
     public static final String AROUTER_PACKAGE =  "com.example.arouter_annotations.ARouter";
+    public static final String PARAMETER_PACKAGE =  "com.example.arouter_annotations.Parameter";
 
     // 原生Activity的全类名
     public static final String ACTIVITY_PACKAGE = "android.app.Activity";
@@ -19,6 +20,9 @@ public class ProcessorConfig {
 
     //ARouter api的ARouterGroup高层标准
     public static final String AROUTER_API_GROUP = AROUTER_PACKAGE_NAME + ".ARouterGroup";
+
+    //ARouter api的ParameterGet高层标准
+    public static final String AROUTER_API_PARAMETER_GET = AROUTER_PACKAGE_NAME + ".ParameterGet";
 
     //获取pathMap
     public static final String PATH_METHOD_NAME = "getPathMap";
@@ -42,4 +46,9 @@ public class ProcessorConfig {
     public static final String OPTIONS = "moduleName";
     // 目的是接收 包名（APT 存放的包名）
     public static final String APT_PACKAGE = "packageNameForAPT";
+
+    public static final String PARAMETER_NAME = "targetParameter";
+
+    public static final String METHOD_GET_PARAMETER = "getParameter";
+    public static final String STRING = "java.lang.String";
 }
