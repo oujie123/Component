@@ -40,6 +40,8 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
+import jdk.nashorn.internal.codegen.CompilerConstants;
+
 @AutoService(Processor.class) //一个服务，其他地方可以调用
 @SupportedAnnotationTypes({ProcessorConfig.AROUTER_PACKAGE})  // 支持那些注解
 @SupportedSourceVersion(SourceVersion.RELEASE_7)  // 环境的版本
@@ -97,6 +99,11 @@ public class ARouterProcessor extends AbstractProcessor {
             messager.printMessage(Diagnostic.Kind.NOTE, "没有找到被@ARouter注解的地方呀");
             return false; // 如果返回false说明我的注解处理器不干活儿了，  返回true说明干完了
         }
+
+        // TODO 新增点1：传递图片
+        TypeElement callType = elementTool.getTypeElement(ProcessorConfig.AROUTER_API_CALL);
+        TypeMirror callMirror = callType.asType();  // call的所有描述信息
+
         /**
          TODO 模块一
          package com.example.helloworld;
@@ -206,6 +213,8 @@ public class ARouterProcessor extends AbstractProcessor {
 
             if (typeTool.isSubtype(typeMirror, activityMirror)) {
                 routerBean.setTypeEnum(RouterBean.TypeEnum.ACTIVITY);  //证明是activity
+            } else if (typeTool.isSubtype(typeMirror, callMirror)) {
+                routerBean.setTypeEnum(RouterBean.TypeEnum.CALL);
             } else {
                 // 不是activity就抛出异常
                 throw new RuntimeException("@ARouter注解的类必须继承Activity。path -- >" + routerBean.getPath());
@@ -307,7 +316,7 @@ public class ARouterProcessor extends AbstractProcessor {
         }
 
         // return groupMap;
-        builder.addStatement("return $N",ProcessorConfig.GROUP_VAR1);
+        builder.addStatement("return $N", ProcessorConfig.GROUP_VAR1);
 
         // 拼接类  ARouter$$Group$$ + register     options是每个Module传入的
         String finalClassName = ProcessorConfig.GROUP_FILE_NAME + options;
