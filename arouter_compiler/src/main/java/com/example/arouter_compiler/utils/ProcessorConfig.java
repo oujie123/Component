@@ -27,6 +27,8 @@ public class ProcessorConfig {
     //ARouter api的Call高层标准
     public static final String AROUTER_API_CALL = AROUTER_PACKAGE_NAME + ".Call";
 
+    public static final String CLASS_NAME_ROUTERMANAGER = "RouterManager";
+
     //获取pathMap
     public static final String PATH_METHOD_NAME = "getPathMap";
 

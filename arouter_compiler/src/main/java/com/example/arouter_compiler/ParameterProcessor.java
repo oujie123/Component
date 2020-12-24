@@ -114,11 +114,14 @@ public class ParameterProcessor extends AbstractProcessor {
                     // 方法生成成功
                     ParameterFactory factory = new ParameterFactory.Builder(targetParameter)
                             .setMessager(messager)
+                            .setElementUtils(elementTool)
+                            .setTypeUtil(typeTool)
                             .setClassName(className)
                             .build();
 
                     factory.addFirstStatement();
                     for (Element element : entry.getValue()) {
+                        messager.printMessage(Diagnostic.Kind.NOTE,"name ==" + element.getSimpleName());
                         factory.buildStatement(element);
                     }
 
