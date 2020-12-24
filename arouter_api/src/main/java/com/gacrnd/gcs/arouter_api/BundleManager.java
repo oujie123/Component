@@ -16,6 +16,16 @@ public class BundleManager {
     // Intent传输  携带的值，保存到这里
     private Bundle bundle = new Bundle();
 
+    private Call call;
+
+    public Call getCall() {
+        return call;
+    }
+
+    public void setCall(Call call) {
+        this.call = call;
+    }
+
     public Bundle getBundle() {
         return this.bundle;
     }

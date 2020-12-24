@@ -1,7 +1,7 @@
 package com.gacrnd.gcs.login;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.arouter_annotations.ARouter;
 import com.example.arouter_annotations.Parameter;
-import com.example.common.order.RegisterDrawable;
+import com.example.common.register.drawable.RegisterDrawable;
+import com.example.common.register.user.IUser;
 import com.gacrnd.gcs.arouter_api.ParameterManager;
-import com.gacrnd.gcs.arouter_api.RouterManager;
 
 @ARouter(path = "/login/MainActivity")
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     @Parameter(name = "/register/getDrawable")
     RegisterDrawable registerDrawable;
     private ImageView image;
+
+    @Parameter(name = "/register/getUserInfo")
+    IUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
 //                        .navigation(MainActivity.this);
 
                 int drawable = registerDrawable.getDrawable();
-                image.setBackgroundResource(drawable);
+                image.setImageResource(drawable);
             }
         });
+
+        Log.d("jack", "onCreate: " + user.getUserInfo().toString());
     }
 }

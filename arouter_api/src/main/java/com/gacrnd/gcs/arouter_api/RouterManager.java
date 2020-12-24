@@ -62,7 +62,7 @@ public class RouterManager {
             throw new IllegalArgumentException("不按常理出牌 path乱搞的啊，正确写法：如 /order/Order_MainActivity");
         }
 
-        // 同学可以自己增加
+        // 可以自己增加
         // ...
 
         if (path.lastIndexOf("/") == 0) { // 只写了一个 /
@@ -77,7 +77,7 @@ public class RouterManager {
         }
 
         // 证明没有问题，没有抛出异常
-        this.path =  path;  // 最终的效果：如 /order/Order_MainActivity
+        this.path = path;  // 最终的效果：如 /order/Order_MainActivity
         this.group = finalGroup; // 例如：order，personal
 
         // TODO 走到这里后  grooup 和 path 没有任何问题   app，order，personal      /app/MainActivity
@@ -140,6 +140,11 @@ public class RouterManager {
                             intent.putExtras(bundleManager.getBundle()); // 携带参数
                             context.startActivity(intent, bundleManager.getBundle());
                             break;
+                        case CALL:
+                            Class<?> clazz = routerBean.getMyClass();
+                            Call call = (Call) clazz.newInstance();
+                            bundleManager.setCall(call);
+                            return bundleManager.getCall();
                     }
                 }
             }

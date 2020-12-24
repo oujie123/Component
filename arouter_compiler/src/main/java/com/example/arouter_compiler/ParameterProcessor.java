@@ -121,7 +121,6 @@ public class ParameterProcessor extends AbstractProcessor {
 
                     factory.addFirstStatement();
                     for (Element element : entry.getValue()) {
-                        messager.printMessage(Diagnostic.Kind.NOTE,"name ==" + element.getSimpleName());
                         factory.buildStatement(element);
                     }
 

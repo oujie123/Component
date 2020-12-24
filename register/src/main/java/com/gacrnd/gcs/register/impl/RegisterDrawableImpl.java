@@ -1,7 +1,7 @@
 package com.gacrnd.gcs.register.impl;
 
 import com.example.arouter_annotations.ARouter;
-import com.example.common.order.RegisterDrawable;
+import com.example.common.register.drawable.RegisterDrawable;
 import com.gacrnd.gcs.register.R;
 
 /**
