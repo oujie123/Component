@@ -32,11 +32,10 @@ public class UserInfo extends BaseUser {
 
     @Override
     public String toString() {
-        String string = super.toString();
         return "UserInfo{" +
                 "token='" + token + '\'' +
                 ", level=" + level +
-                '}' + "\n" + super.toString();
+                "} " + super.toString();
     }
 }
 

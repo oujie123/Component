@@ -145,6 +145,8 @@ public class RouterManager {
                             Call call = (Call) clazz.newInstance();
                             bundleManager.setCall(call);
                             return bundleManager.getCall();
+                            default:
+                                break;
                     }
                 }
             }

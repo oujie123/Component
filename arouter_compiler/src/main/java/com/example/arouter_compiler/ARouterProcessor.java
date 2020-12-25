@@ -125,76 +125,74 @@ public class ARouterProcessor extends AbstractProcessor {
         for (Element element : elements) {
             //多个MainActivity注册     element就代表每一个Activity
             // 1.写方法 生成main方法   返回值也是对象
-            /**
-             MethodSpec mainMethod = MethodSpec.methodBuilder("main")
-             .addModifiers(Modifier.PUBLIC,Modifier.STATIC)
-             .returns(void.class)
-             .addParameter(String[].class,"args")
-             .addStatement("$T.out.println($S)",System.class,"Hello, JavaPoet!") // 增加方法内部的内容.   $T代表替换的类  $S代表字符串
-             .build();
 
-             // 2.写类
-             TypeSpec jackClass = TypeSpec.classBuilder("HelloWorld")
-             .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
-             .addMethod(mainMethod)
-             .build();
+//             MethodSpec mainMethod = MethodSpec.methodBuilder("main")
+//             .addModifiers(Modifier.PUBLIC,Modifier.STATIC)
+//             .returns(void.class)
+//             .addParameter(String[].class,"args")
+//             .addStatement("$T.out.println($S)",System.class,"Hello, JavaPoet!") // 增加方法内部的内容.   $T代表替换的类  $S代表字符串
+//             .build();
+//
+//             // 2.写类
+//             TypeSpec jackClass = TypeSpec.classBuilder("HelloWorld")
+//             .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
+//             .addMethod(mainMethod)
+//             .build();
+//
+//             // 3.写包
+//             JavaFile file = JavaFile.builder("com.gacrnd.gcs.component",jackClass).build();
+//
+//             // 生成文件
+//             try {
+//             file.writeTo(filer);
+//             } catch (IOException e) {
+//             e.printStackTrace();
+//             messager.printMessage(Diagnostic.Kind.NOTE, "生成失败");
+//             }
 
-             // 3.写包
-             JavaFile file = JavaFile.builder("com.gacrnd.gcs.component",jackClass).build();
+//             //TODO 模板：
+//             public class MainActivity3$$$$$$$$$ARouter {
+//                 public static Class findTargetClass(String path) {
+//                 return path.equals("/app/MainActivity3") ? MainActivity3.class : null;
+//                 }
+//             }
 
-             // 生成文件
-             try {
-             file.writeTo(filer);
-             } catch (IOException e) {
-             e.printStackTrace();
-             messager.printMessage(Diagnostic.Kind.NOTE, "生成失败");
-             }**/
 
-            /**
-             TODO 模板：
-             public class MainActivity3$$$$$$$$$ARouter {
-             public static Class findTargetClass(String path) {
-             return path.equals("/app/MainActivity3") ? MainActivity3.class : null;
-             }
-             }
-             */
-
-            /**
              // 拿到包名
-             String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();
-
-             //拿到类名
-             String className = element.getSimpleName().toString();
-             messager.printMessage(Diagnostic.Kind.NOTE, "被@ARoute注解的类有：" + className);
-             String finalClassName = className + "$$$$$$$$$ARouter";
-
-             //拿到ARouter注解
-             ARouter aRouter = element.getAnnotation(ARouter.class);
-
-             // 1.写方法
-             MethodSpec findTargetMethod = MethodSpec.methodBuilder("findTargetClass")
-             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-             .returns(Class.class)
-             .addParameter(String.class, "path")
-             // element就是MainActivity，但是需要转型，需要使用javapoet包装一下,强转成TypeElement
-             .addStatement("return path.equals($S) ? $T.class : null", aRouter.path(), ClassName.get((TypeElement) element))
-             .build();
-
-             // 2.写类
-             TypeSpec myClass = TypeSpec.classBuilder(finalClassName)
-             .addModifiers(Modifier.PUBLIC)
-             .addMethod(findTargetMethod)
-             .build();
-
-             // 3.写包名
-             JavaFile packagef = JavaFile.builder(packageName,myClass).build();
-
-             // 4.写文件
-             try {
-             packagef.writeTo(filer);
-             } catch (IOException e) {
-             e.printStackTrace();
-             }*/
+//             String packageName = elementTool.getPackageOf(element).getQualifiedName().toString();
+//
+//             //拿到类名
+//             String className = element.getSimpleName().toString();
+//             messager.printMessage(Diagnostic.Kind.NOTE, "被@ARoute注解的类有：" + className);
+//             String finalClassName = className + "$$$$$$$$$ARouter";
+//
+//             //拿到ARouter注解
+//             ARouter aRouter = element.getAnnotation(ARouter.class);
+//
+//             // 1.写方法
+//             MethodSpec findTargetMethod = MethodSpec.methodBuilder("findTargetClass")
+//             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+//             .returns(Class.class)
+//             .addParameter(String.class, "path")
+//             // element就是MainActivity，但是需要转型，需要使用javapoet包装一下,强转成TypeElement
+//             .addStatement("return path.equals($S) ? $T.class : null", aRouter.path(), ClassName.get((TypeElement) element))
+//             .build();
+//
+//             // 2.写类
+//             TypeSpec myClass = TypeSpec.classBuilder(finalClassName)
+//             .addModifiers(Modifier.PUBLIC)
+//             .addMethod(findTargetMethod)
+//             .build();
+//
+//             // 3.写包名
+//             JavaFile packagef = JavaFile.builder(packageName,myClass).build();
+//
+//             // 4.写文件
+//             try {
+//             packagef.writeTo(filer);
+//             } catch (IOException e) {
+//             e.printStackTrace();
+//             }
 
             // TODO 模仿ARouter
             // 校验用户传的参数是否符合规则

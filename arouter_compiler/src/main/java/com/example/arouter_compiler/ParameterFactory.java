@@ -121,10 +121,9 @@ public class ParameterFactory {
             if (typeMirror.toString().equalsIgnoreCase(ProcessorConfig.STRING)) {
                 // String类型
                 methodContent += "getStringExtra($S)"; // 没有默认值
-            } else if (typeUtils.isSubtype(typeMirror,callMirror)) {
+            } else if (typeUtils.isSubtype(typeMirror, callMirror)) {
                 // t.orderDrawable = (OrderDrawable) RouterManager.getInstance().build("/order/getDrawable").navigation(t);
                 methodContent = "t." + fieldName + " = ($T) $T.getInstance().build($S).navigation(t)";
-                messager.printMessage(Diagnostic.Kind.NOTE, "===================");
                 method.addStatement(methodContent,
                         TypeName.get(typeMirror),
                         ClassName.get(ProcessorConfig.AROUTER_PACKAGE_NAME, ProcessorConfig.CLASS_NAME_ROUTERMANAGER),
