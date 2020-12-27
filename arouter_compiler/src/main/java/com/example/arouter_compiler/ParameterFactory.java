@@ -129,11 +129,19 @@ public class ParameterFactory {
                         ClassName.get(ProcessorConfig.AROUTER_PACKAGE_NAME, ProcessorConfig.CLASS_NAME_ROUTERMANAGER),
                         annotationValue);
                 return;
+            } else {
+                //传输对象
+                // 由于需要强转，所以需要重新拼接methodContent
+                methodContent = "t.getIntent().getSerializableExtra($S)";
             }
         }
 
         // 健壮代码
-        if (methodContent.endsWith(")")) { // 抱歉  全部的 getBooleanExtra  getIntExtra   getStringExtra
+        if (methodContent.contains("Serializable")) {
+            // 传输对象需要强转的
+            // t.student = (Student) t.getIntent().getSerializableExtra("student");
+            method.addStatement(finalValue + "= ($T)" + methodContent, ClassName.get(element.asType()), annotationValue);
+        } else if (methodContent.endsWith(")")) { // 抱歉  全部的 getBooleanExtra  getIntExtra   getStringExtra
             // 参数二 9 赋值进去了
             // t.age = t.getIntent().getBooleanExtra("age", t.age ==  9);
             method.addStatement(methodContent, annotationValue);

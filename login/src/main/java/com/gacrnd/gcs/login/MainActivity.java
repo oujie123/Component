@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.arouter_annotations.ARouter;
 import com.example.arouter_annotations.Parameter;
+import com.example.common.register.bean.Student;
 import com.example.common.register.drawable.RegisterDrawable;
 import com.example.common.register.user.IUser;
 import com.gacrnd.gcs.arouter_api.ParameterManager;
+import com.gacrnd.gcs.arouter_api.RouterManager;
 
 @ARouter(path = "/login/MainActivity")
 public class MainActivity extends AppCompatActivity {
@@ -44,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
 //                    e.printStackTrace();
 //                }
 
-//                RouterManager.getInstance().build("/register/MainActivity")
-//                        .withBoolean("sex",true)
-//                        .withString("name","jack")
-//                        .navigation(MainActivity.this);
+                RouterManager.getInstance().build("/register/MainActivity")
+                        .withBoolean("sex", true)
+                        .withString("name", "jack")
+                        .withSerializable("student", new Student("jack", "man", 18))
+                        .navigation(MainActivity.this);
 
                 int drawable = registerDrawable.getDrawable();
                 image.setImageResource(drawable);

@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
+
 /**
  * 跳转时 ，用于参数的传递
  */
@@ -48,6 +50,11 @@ public class BundleManager {
 
     public BundleManager withBundle(Bundle bundle) {
         this.bundle = bundle;
+        return this;
+    }
+
+    public BundleManager withSerializable(@NonNull String key, @NonNull Serializable object) {
+        bundle.putSerializable(key,object);
         return this;
     }
 
